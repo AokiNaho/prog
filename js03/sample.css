@@ -1,0 +1,61 @@
+body{
+    margin:0;
+    padding:0;
+    text-align:left;
+    font-size: 32px;
+    font-family: "Yu Mincho";
+    background-color: #ff5c58;
+}
+header{
+    background-color: #ff5c58;
+    text-align:center;
+}
+h1{
+    color: #fff
+}
+#ume_1{
+    padding-left: 5%;
+    padding-top:0;
+    margin-top:0;
+    transition: all 2s 0s ease;
+}
+#ume_2{
+    padding-left: 85%;
+    padding-top:0;
+    margin-top:0;
+    transition: all 2s 0s ease;
+}
+.active{
+    transform: rotate(2turn);
+}
+footer{
+    background-color: #fff;
+    text-align: center;
+}
+p{
+    font-size:300%;
+    text-align: center;
+    height:200px;
+    color: #fff;
+    padding:0;
+    margin:0;
+}
+ul{
+    padding:0;
+    display:table;  /* 定義 */
+    table-layout: fixed;
+    width:100%;
+}
+li{
+    text-align: center;
+    list-style-type:none;
+    background-color: #ffedd3;
+    display:table-cell;  /* 定義 */
+    cursor: pointer;
+    color: #483434;
+    border: 10px double #eb6101;
+}
+li:hover{
+    background: #f6d7a7;
+    color:#fff;
+}
