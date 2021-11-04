@@ -1,0 +1,62 @@
+body{
+    margin:30px;
+    padding:0;
+    text-align:left;
+    font-family: 'YuGothic','Yu Gothic','Hiragino Kaku Gothic ProN','ヒラギノ角ゴ ProN W3','メイリオ', 'Meiryo','ＭＳ ゴシック',sans-serif;
+    font-size: 32px;
+    background-color: #caebf2;
+}
+header{
+    background-color: #caebf2;
+    /* border-bottom: 1px solid #ccc; */
+    text-align: center;
+}
+footer{
+    background-color: #efefef;
+    /* border-bottom:1px solid #ccc; */
+    text-align: center;
+}
+h1{
+    color: #000;
+}
+button{
+    margin-left: 85%;  
+}
+ul{
+    padding:0;
+    margin-top: 30px;
+    margin-bottom: 50px;
+    display:table;  /* 定義 */
+    table-layout: fixed;
+    width:100%;
+}
+li{
+    text-align: center;
+    list-style-type:none;
+    border: 1px solid #fff;
+    background-color: #caebf2;
+    display:table-cell;  /* 定義 */
+    cursor: pointer;
+}
+li:hover{
+    background: #fff;
+    color:#fff;
+}
+.gcp{
+    width:200px;
+}
+.pc{
+    width:200px; 
+}
+table{
+    margin: auto;
+}
+td{
+    padding: 20px;
+    text-align: center;
+    color:#2c245b;
+    font-size: 25px;
+}
+
+
+

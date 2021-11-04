@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<script src="jquery-2.1.3.min.js"></script>
+<link rel="stylesheet" href="jan.css">
+<title>じゃんけん</title>
+</head>
+<body>
+
+<header>
+  <h1>じゃんけん</h1>
+</header>
+
+<main>
+  <table>
+      <tr>
+          <td id="pc_hands", style="display: none;"></td>
+          <td id="judgment"></td>
+          <td id="my_hands", style="display: none;"></td>
+      </tr>
+      <tr>
+          <td>コンピュータ</td>
+          <td></td>
+          <td>あなた</td>
+      </tr>
+  </table>
+  <button id="re_btn">もう一回</button>
+  <ul>
+    <li id="gu_btn"><img src="gu.png" class="gcp"></li>
+    <li id="cho_btn"><img src="cho.png" class="gcp"></li>
+    <li id="par_btn"><img src="par.png" class="gcp"></li>
+  </ul>
+  
+</main>
+
+<footer></footer>
+
+<script>
+$("#re_btn").on("click", function doReload(){
+    window.location.reload();
+});
+
+$("#gu_btn").on("click", function(){
+    const num = Math.ceil(Math.random() * 3);
+    if(num == 1){
+        $("#pc_hands").html('<img src="gu.png" class="pc">');
+        $("#judgment").html("引き分け");
+        $("#my_hands").html('<img src="gu.png" class="pc">');
+        $("#pc_hands").fadeIn(1000);
+        $("#my_hands").fadeIn(1000);
+    }
+    if(num == 2){
+        $("#pc_hands").html('<img src="cho.png" class="pc">');
+        $("#judgment").html("あなたの勝ち");
+        $("#my_hands").html('<img src="gu.png" class="pc">');
+        $("#pc_hands").fadeIn(1000);
+        $("#my_hands").fadeIn(1000);
+    }
+    if(num == 3){
+        $("#pc_hands").html('<img src="par.png" class="pc">');
+        $("#judgment").html("あなたの負け");
+        $("#my_hands").html('<img src="gu.png" class="pc">');
+        $("#pc_hands").fadeIn(1000);
+        $("#my_hands").fadeIn(1000);
+    }
+});
+
+$("#cho_btn").on("click", function(){
+    const num = Math.ceil(Math.random() * 3);
+    if(num == 1){
+        $("#pc_hands").html('<img src="gu.png" class="pc">');
+        $("#judgment").html("あなたの負け");
+        $("#my_hands").html('<img src="cho.png" class="pc">');
+        $("#pc_hands").fadeIn(1000);
+        $("#my_hands").fadeIn(1000);
+
+    }
+    if(num == 2){
+        $("#pc_hands").html('<img src="cho.png" class="pc">');
+        $("#judgment").html("引き分け");
+        $("#my_hands").html('<img src="cho.png" class="pc">');
+        $("#pc_hands").fadeIn(1000);
+        $("#my_hands").fadeIn(1000);
+    }
+    if(num == 3){
+        $("#pc_hands").html('<img src="par.png" class="pc">');
+        $("#judgment").html("あなたの勝ち");
+        $("#my_hands").html('<img src="cho.png" class="pc">');
+        $("#pc_hands").fadeIn(1000);
+        $("#my_hands").fadeIn(1000);
+    }
+});
+
+$("#par_btn").on("click", function(){
+    const num = Math.ceil(Math.random() * 3);
+    if(num == 1){
+        $("#pc_hands").html('<img src="gu.png" class="pc">');
+        $("#judgment").html("あなたの勝ち");
+        $("#my_hands").html('<img src="par.png" class="pc">');
+        $("#pc_hands").fadeIn(1000);
+        $("#my_hands").fadeIn(1000);
+    }
+    if(num == 2){
+        $("#pc_hands").html('<img src="cho.png" class="pc">');
+        $("#judgment").html("あなたの負け");
+        $("#my_hands").html('<img src="par.png" class="pc">');
+        $("#pc_hands").fadeIn(1000);
+        $("#my_hands").fadeIn(1000);
+    }
+    if(num == 3){
+        $("#pc_hands").html('<img src="par.png" class="pc">');
+        $("#judgment").html("引き分け");
+        $("#my_hands").html('<img src="par.png" class="pc">');
+        $("#pc_hands").fadeIn(1000);
+        $("#my_hands").fadeIn(1000);
+    }
+});
+
+    
+    
+    
+    
+    
+
+</script>
+</body>
+</html>
