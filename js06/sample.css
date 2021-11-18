@@ -1,0 +1,68 @@
+body {
+    background-color: #4b6587;
+    /* width: 600px; */
+    font-family: 'Helvetica', 'Arial', sans-serif;
+    padding-top: 3%;
+  }
+  
+  div.content {
+    /* 要素をはみ出さない */
+    width: 80%;
+    height: 40rem;
+    table-layout: fixed;
+    word-wrap: break-word;
+    word-break: break-all;
+    overflow: visible;
+    /* white-space: pre-wrap; */
+    margin-right: auto;
+    margin-left: auto;
+    padding-left: 5%;
+    padding-top: 2%;
+    background-color: #f0e5cf;
+  }
+  
+  table, input, textarea{
+   margin-left: 1%;
+  }
+
+  textarea {
+    width: 30rem;
+    height: 4rem;
+  }
+  
+  input[type=text] {
+   width: 120px;
+  }
+  
+  table {
+    width: 35rem;
+  }
+  
+  table,tr,th,td {
+    font-size: 14px;
+    list-style-type: none;
+    border: 1px solid #4b6587;
+    padding: 5px;
+  }
+
+  .memo{
+    white-space: pre-wrap;
+  }
+  
+  #target_month{
+    color: #4b6587;
+  }
+
+  td {
+    background: #f7f6f2;
+  }
+
+  th{
+    color: #4b6587;
+  }
+
+  footer{
+    color:#f7f6f2;
+    text-align: center;
+    padding-top: 0.5rem;
+  }
