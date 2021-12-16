@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="canvas.css">
+    <title>canvas_base.html</title>
+</head>
+
+<body>
+    <section>
+        <h1>Canvas</h1>
+        <nav id="navi">
+            <!-- 線の色を変更するカラーピッカーHTML要素[id="color"] -->
+            <input type="color" id="col">
+            <!-- 線の太さを変更するスライダーHTML要素 [id="range"]-->
+            <input type="range" id="size" min="1" max="25" value="3">
+            <button class ="btn" id="draw_all">塗りつぶす</button>
+            <button class ="btn" id="clear_btn">クリア</button>
+            <button class ="btn" id="save">保存</button>
+        </nav>
+        <canvas id="drowarea" width="500" height="500" style="border:5px solid #a2d2ff;"></canvas>  
+    </section>
+
+
+    <script src="jquery-2.1.3.min.js"></script>
+    <script>
+        //初期化(変数letで宣言)
+        let canvas_mouse_event = false; //スイッチ [ true=線を引く, false=線は引かない ]  ＊＊＊
+        let oldX = 0; //１つ前の座標を代入するための変数
+        let oldY = 0; //１つ前の座標を代入するための変数
+        let bold_line = 3; //ラインの太さをここで指定[スライダー値を代入]
+        let color = "#000"; //ラインの色をここで指定[カラーピッカー値を代入]
+        //------------------------------------------------
+        const can = $("#drowarea")[0]; //CanvasElement
+        const ctx = can.getContext("2d"); //描画するための準備！
+        //------------------------------------------------
+
+        $("#size").on("change",function() { // 値が変わったときに実行
+            bold_line = $(this).val(); // this = #size
+        });
+
+        $("#col").on("change",function() { // 値が変わったときに実行
+            color = $(this).val(); // this = #col
+        });
+
+        //mousedown：フラグをTrue
+        //-----------------------------------------------
+        //oldX = e.offsetX;       //MOUSEDOWNしたX横座標取得
+        //oldY = e.offsetY; //MOUSEDOWN Y高さ座標取得
+        //canvas_mouse_event=true;
+        //-----------------------------------------------
+        //上5つのスクリプトを記述します。
+
+        $(can).on("mousedown", function(e){ // mouseをクリックしたら
+            oldX = e.offsetX; //MOUSEDOWNしたX横座標取得
+            oldY = e.offsetY; //MOUSEDOWN Y高さ座標取得
+            canvas_mouse_event=true;
+        });
+
+        //mousemove：フラグがTrueだったら描く ※e：イベント引数取得
+        //----------------------------------------------
+        $(can).on("mousemove", function(e){
+            if(canvas_mouse_event==true){
+                const px = e.offsetX;
+                const py = e.offsetY;
+                ctx.strokeStyle = color;
+                ctx.lineWidth = bold_line; // 3px
+                ctx.beginPath(); // 初期化
+                ctx.lineJoin= "round"; // ペン先を丸くする
+                ctx.lineCap = "round";
+                if(px<=0 || px>=can.width || py<=0 || py>=can.height){
+                    canvas_mouse_event=false;
+                    oldX = px; // 古い座標を新しい座標にする
+                    oldY = py;
+                    console.log(px, py);
+                } else {
+                    ctx.moveTo(oldX, oldY); // 線の開始
+                    ctx.lineTo(px, py); // 線の終了
+                    ctx.stroke(); // 線を引く
+                    oldX = px; // 古い座標を新しい座標にする
+                    oldY = py;
+                };
+            }
+        });
+
+
+        //mouseup：フラグをfalse
+        //------------------------------------------------
+        //    canvas_mouse_event=false;
+        //------------------------------------------------
+        $(can).on("mouseup", function(){ // クリックを離したら
+            canvas_mouse_event=false;
+        });
+
+        //#clear_btn：クリアーボタンAction
+        //-----------------------------------------------------------------
+        //    ctx.beginPath();
+        //    ctx.clearRect(0, 0, can.width, can.height);
+        //-----------------------------------------------------------------
+        $("#clear_btn").on("click", function(){
+            if(!confirm("白紙に戻します")){
+                return false;
+            } else {
+                ctx.beginPath();
+                ctx.clearRect(0, 0, can.width, can.height);
+            }
+        });
+
+        // 塗りつぶし
+        $("#draw_all").on("click", function(){
+            ctx.beginPath();
+            ctx.fillStyle= color;
+            ctx.rect(0, 0, can.width, can.height);
+            ctx.fill();
+        });
+
+        $("#save").on("click", function(){
+            saveCanvas("drowarea");
+        });
+
+        function saveCanvas(canvas_id) {
+            let canvas = document.getElementById(canvas_id);
+            //アンカータグを作成
+            let a = document.createElement('a');
+            //canvasをJPEG変換し、そのBase64文字列をhrefへセット
+            a.href = canvas.toDataURL('image/jpeg', 0.85);
+            //ダウンロード時のファイル名を指定
+            a.download = 'download.jpg';
+            //クリックイベントを発生させる
+            a.click();
+        }
+
+    </script>
+</body>
+
+</html>
