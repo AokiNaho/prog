@@ -1,0 +1,165 @@
+body {
+  background-color: #92a9bd;
+  font-family: 'Kaisei Opti', serif;
+  font-family: 'Kiwi Maru', serif;
+  padding-top: 3%;
+}
+  
+div.content {
+  width: 75%;
+  height: 40rem;
+  table-layout: fixed;
+  word-wrap: break-word;
+  word-break: break-all;
+  overflow: visible;
+  margin-right: auto;
+  margin-left: auto;
+  padding-left: 5%;
+  padding-top: 2%;
+  background-image: url("note.png");
+  background-color:rgba(255,255,255,0.5);
+  background-blend-mode:lighten;
+}
+
+h1 {
+  font-size: 25px;
+  color: #7c99ac;
+}
+
+p{
+  margin: 5px;
+}
+  
+table, input, textarea{
+  margin-left: 1%;
+}
+
+.icon{
+  padding-bottom: 0;
+  margin-bottom: 0;
+  margin-left: 15px;
+  text-align: center;
+  transition: all 0.2s;
+}
+.icon:hover{
+  transform: scale(1.3, 1.3);
+}
+
+textarea {
+  width: 20rem;
+  height: 2rem;
+  border: 2px solid #aaa;
+  border-radius: 4px;
+  margin: 2px 0;
+  outline: none;
+  padding: 8px;
+  transition: 0.3s;
+  color: #444444;
+  font-family: 'Lato', 'sans-serif';
+}
+textarea:focus{
+  outline: none;
+  border: 2px solid #7c99ac;
+  box-shadow: 0 0 8px 0 #7c99ac;
+}
+  
+input[type=text] {
+  width: 120px;
+  border: 2px solid #aaa;
+  border-radius: 4px;
+  margin: 3px 0;
+  outline: none;
+  padding: 5px;
+  box-sizing: border-box;
+  transition: 0.3s;
+  color: #444444;
+  font-family: cursive;
+}
+input[type=text]:focus{
+  outline: none;
+  border: 2px solid #7c99ac;
+  box-shadow: 0 0 8px 0 #7c99ac;
+}
+
+table {
+  width: 35rem;
+  padding: 5px;
+  background-color: #ffffff;
+  text-align: center;
+  border: 2px solid #7c99ac;
+  border-radius: 5px;
+  margin-top: 15px;
+}
+  
+tr,th,td {
+  font-size: 14px;
+  list-style-type: none;
+  border: 1px solid #7c99ac;
+  padding: 5px;
+}
+
+.date{
+  font-family: cursive;
+}
+.come{
+  white-space: pre-wrap;
+}
+.date,.come,.stamp,.erase{
+  background-color: #ffffff;
+}
+
+ul{
+  padding:0;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  display:table;  /* 定義 */
+  table-layout: fixed;
+  width:25%;
+}
+
+.radio {
+	display: none;
+}
+.radio + .radio_image {
+	border: 3px #ffffff solid;
+	background-color: #ffffff;
+  border-radius: 50%;
+  text-align: center;
+  margin: 2px 0 0 3px;
+  cursor: pointer;
+}
+.radio:checked + .radio_image {
+	border: 3px #7c99ac solid;
+	background-color: #c6e1f5;
+}
+
+.delete {  
+  border: none;
+  text-align: center;
+  background-color: #ffffff;
+  transition: all 0.2s;
+}
+.delete:hover{
+  transform: scale(1.2, 1.2);
+}
+  
+#target_month{
+  color: #7c99ac;
+}
+
+td {
+  background: #d3dedc;
+  color: #222222;
+}
+
+th{
+  color: #7c99ac;
+}
+
+footer{
+  color:#ffffff;
+  text-align: center;
+  padding-top: 0.5rem;
+}
+
+  

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<body lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>myMemoPad</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<link rel="stylesheet" href="diary_2.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kaisei+Opti:wght@500&family=Kiwi+Maru&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="content">
+    <h1>ひとこと日記</h1>
+    <p><b><span id="target_month"></span></b></p>
+    <p>
+      <input type="text" id="product_date" placeholder="日付">
+      <input type="image" class="icon" id="save" src="pen.png" width="20">
+      <input type="image" class="icon" id="clear" src="keshi.png" width="20">
+      <input type="image" class="icon" id="all_clear" src="kira.png" width="20">
+    </p>
+    <p><textarea id="product_come" placeholder="ひとこと日記"></textarea>
+        <div hidden><input type="text" id="product_stamp"></div>
+    </p>
+    <label><input type="radio" name="face" value="img src='smile1.png' width='20'" checked class="radio"><img src="smile1.png" class="radio_image" width="30"></label>
+    <label><input type="radio" name="face" value="img src='smile2.png' width='20'" class="radio"><img src="smile2.png" class="radio_image" width="30"></label>
+    <label><input type="radio" name="face" value="img src='smile3.png' width='20'" class="radio"><img src="smile3.png" class="radio_image" width="30"></label>
+    <label><input type="radio" name="face" value="img src='smile4.png' width='20'" class="radio"><img src="smile4.png" class="radio_image" width="30"></label>
+    <label><input type="radio" name="face" value="img src='smile5.png' width='20'" class="radio"><img src="smile5.png" class="radio_image" width="30"></label>
+
+    <div id="nikki" style="overflow: auto; height:300px;">
+      <table>
+        <thead>
+          <tr>
+            <th width="16%">日付</th>
+            <th width="45%">今日のひとこと</th>
+            <th width="10%">気分</th>
+            <th width="8%">削除</th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+  $(function(){
+    let now_date  = new Date(); //年月を取得
+    let now_month = now_date.getFullYear()+ '年' +(now_date.getMonth()+1)+'月';
+    $("#target_month").append(now_month); //データを下に差し込む
+    const time = jikan();
+    $("#product_date").val(time); //日付をtextに表示
+    $("#product_stamp").val("img src='smile1.png' width='20'"); //スタンプの初期値
+    bulidTable(); //ローカルストレージから表を作成
+    createDeleteEvent(); //挿入した行のボタンをイベントへ登録する
+
+    // ---関数---
+    function removeLocalStorage(name){ //1データ削除
+      localStorage.removeItem(name); 
+    }
+    
+    function removeLocalStorageAll(){ //データを全て削除
+      localStorage.clear();
+    }
+
+    function getLocalstorageItem(name){ //データを取り出す
+      return localStorage.getItem(name);
+    }
+
+    function saveLocalstorage(name, data){ //データを新規保存
+      localStorage.setItem(name, data);
+      return true;
+    }
+
+    function getLocalStorageName(ym = '') { //ローカルストレージ名生成
+      var base_name = 'Diary';
+      return base_name;
+    }
+
+    // 日時を取得
+    function jikan(){
+        let now = new Date();
+        let year = now.getFullYear();
+        let month = now.getMonth() + 1; //月は必ず +１をする！
+        let date = now.getDate();
+        const t = year+"/"+month+"/"+date;
+        return t;
+    }
+
+    // スタンプ
+    $("[name=face]").on("click",function(){
+      const f = $(this).val(); //thisで選択した場所の値を取得
+      $("#product_stamp").val(f);
+      console.log(f);
+    });
+
+    // テーブルを作成
+    function bulidTable(){ 
+      let tableBody = "";
+      $("table tbody tr").remove(); //テーブルを初期化
+      let localstorage_name = getLocalStorageName(); //ローカルストレージ名取得
+      let localSt = getLocalstorageItem(localstorage_name); //ローカルストレージのデータ取得
+      let localStJSON = JSON.parse(localSt); //JSON形式から配列に変換
+
+      $(localStJSON).map(function(index, line){
+        tableBody += "<tr>";
+        tableBody += "<td class='date'>" + line["date"] + "</td>";
+        tableBody += "<td class='come'>" + line["come"] + "</td>";
+        tableBody += "<td class='stamp'><" + line["stamp"] + "></td>";
+        tableBody += '<td class="erase"><input type="image" class="delete" src="can.png" width="20"></td>';
+        tableBody += "</tr>";
+      });
+      $('table tbody').append(tableBody); //テーブルを下に追加
+    }
+
+    // テーブル情報を読み込む
+    function getJsonFromTable() { 
+      let counter = 0;
+      let line = [];
+      $("table tbody tr").map(function(index, val){ //.map = 繰り返し処理の後、新しい配列を返す
+        line[counter] = {"date":$(val).children().eq(0).text()
+                    , "come":$(val).children().eq(1).text()
+                    , "stamp":"img src='smile1.png' width='20'"};
+        // if(line[counter].stamp == ""){
+        //   line[counter].stamp = "img src='smile1.png' width='20'"
+        // }
+        counter += 1;
+      });
+      return line;
+    }
+
+    // ---ボタン処理---
+    // 削除ボタンの処理
+    function createDeleteEvent() { 
+      $(document).on("click", ".delete", function(event) {
+        let target = $(event.target);
+        target.parents("tr").remove();
+        let line = getJsonFromTable();
+        let mainJSON = JSON.stringify(line); //JSON形式に変換
+        saveLocalstorage(getLocalStorageName(), mainJSON); //ローカルストレージに保存
+      });
+    }
+
+    // 保存ボタンの処理
+    $("#save").click(function(){
+      let date = $("#product_date").val();
+      let come = $("#product_come").val();
+      let stamp = $("#product_stamp").val();
+      console.log(stamp);
+      // 入力確認
+      if(!date){
+        alert("日付を入力してください");
+        return;
+      } else if(!come){
+          alert("テキストを入力してください");
+          return;
+        }
+      $("#product_come").val(""); //保存したらテキストを消す
+
+      // 行を追加
+      $('table').append('<tr><td class="date">'+ date +'</td>'
+                  +'<td class="come">'+ come +'</td>'
+                  +'<td class="stamp"><'+ stamp +'></td>'
+                  +'<td class="erase"><input type="image" class="delete" src="can.png" width="20"></td>'
+                  +'</tr>');
+
+      var product = {"date":date, "come":come, "stamp":stamp}; // ローカルストレージに保存
+      var mainArray = [];
+      var localStJSON = getLocalstorageItem(getLocalStorageName());  //既存のローカルストレージの値を取得
+      if(localStJSON != null && localStJSON != "") {
+        var mainArray = JSON.parse(localStJSON); // JSON形式から連想配列に変換
+      }
+      mainArray.push(product); //配列に要素を追加
+
+      var mainJSON = JSON.stringify(mainArray); //連想配列からJSON形式に変換
+      saveLocalstorage(getLocalStorageName(), mainJSON); // ローカルストレージに保存
+
+      createDeleteEvent(); //挿入した行のボタンをイベントへ登録する
+    });
+    
+    // クリアボタンの処理
+    $("#clear").on("click",function(){
+      // radioDeselection();
+      $("#product_come").val(""); //テキスト削除
+    });
+
+    // 全消去ボタンの処理
+    $("#all_clear").click(function(){ 
+    if(!confirm('データを全て削除してもよろしいですか？')){
+        return false;
+      }else{
+        removeLocalStorage(getLocalStorageName());
+        $("table tbody tr").remove();
+      }
+    });
+  }); 
+  </script>
+
+  <footer><small>Diary</small></footer>
+</body>
+</html>
